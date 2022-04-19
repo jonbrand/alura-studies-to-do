@@ -1,16 +1,18 @@
 import { ITask } from '../../../types/ITasks';
-import style from '../List.module.scss';
+import style from './Item.module.scss';
 
 interface Props extends ITask {
   taskSelect: (selectedTask: ITask) => void
 }
 
 export function Item({task, time, selected, complete, id, taskSelect}: Props) {
-  console.log('item atual: ', {task, time, selected, complete, id})
   return (
     <li 
-      className={`${style.item} ${selected ? style.itemSelecionado : ''}`}
-      onClick={() => taskSelect({
+      className={`${style.item} 
+          ${selected ? style.itemSelecionado : ''} 
+          ${complete ? style.itemCompletado : '' }
+        `}
+      onClick={() => !complete && taskSelect({
         task,
         time,
         selected,
@@ -20,6 +22,7 @@ export function Item({task, time, selected, complete, id, taskSelect}: Props) {
     >
       <h3>{task}</h3>
       <span>{time}</span>
+      {complete && <span className={style.concluido} aria-label='tarefa completada'></span>}
     </li>
   )
 }
