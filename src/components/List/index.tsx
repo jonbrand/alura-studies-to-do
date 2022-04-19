@@ -2,15 +2,21 @@ import { ITask } from "../../types/ITasks";
 import { Item } from "./Item";
 import style from './List.module.scss';
 
-export function List ({ tasks }: { tasks: ITask[]}) {
+interface Props {
+  tasks: ITask[],
+  taskSelect: (selectedTask: ITask) => void
+}
+
+export function List ({ tasks, taskSelect }:Props) {
   
   return (
     <aside className={style.listaTarefas}>
       <h2>Estudos do dia</h2>
       <ul>
-        {tasks.map((item, index) => (
+        {tasks.map((item) => (
          <Item 
-          key={index} // forma do react linkar com a DOM
+          taskSelect={taskSelect}
+          key={item.id} // forma do react linkar com a DOM
           {...item}
          />
         ))}
